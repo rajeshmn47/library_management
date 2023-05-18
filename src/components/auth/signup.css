@@ -1,0 +1,35 @@
+.signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.signupbox {
+  padding: 15px 15px;
+  height: 80vh;
+  width: 80vw;
+  background-color: #ffffff;
+}
+
+.sociallogin {
+  display: flex;
+  align-items: center;
+  font-family: "Google Sans";
+  background: rgba(66, 133, 244, 0.04);
+  border: 1px solid #dadce0;
+  color: #3c4043;
+  cursor: pointer;
+  padding: 10px 70px;
+  border-radius: 5px;
+}
+
+.inputs {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.submitbutton {
+  padding: 2px 5px;
+  color: #333;
+}
