@@ -19,6 +19,12 @@ const Container = styled.div`
     text-decoration: none;
     color: #333;
   }
+  @media (max-width: 600px) {
+    padding: 10px 10px;
+    a {
+      display: none;
+    }
+  }
 `;
 
 const Account = styled.img`
@@ -88,6 +94,16 @@ const Corner = styled.div`
   width: 100%;
   height: 30px;
 `;
+
+const SearchMb = styled.div`
+  @media (max-width: 1900px) {
+    display: none;
+  }
+  @media (max-width: 600px) {
+    display: block;
+  }
+`;
+
 export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,6 +134,9 @@ export const Navbar = () => {
           </Grid>
           <Grid item lg={4.5} md={4.5}>
             <InputContainer />
+            <SearchMb>
+              <img src="./search.svg" alt="" />
+            </SearchMb>
           </Grid>
           <Grid item lg={2.5} md={2.5}>
             <Corner>

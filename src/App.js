@@ -27,9 +27,13 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/admin/list" element={<Admin />} />
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/edit/:id" element={<Edit />} />
+        {user?.type == "admin" && (
+          <>
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/list" element={<Admin />} />
+            <Route path="/admin/edit/:id" element={<Edit />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

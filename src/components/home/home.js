@@ -53,6 +53,9 @@ const BooksList = styled.div`
   padding: 20px 0;
   border-radius: 5px;
   border: 1px solid #babbae;
+  @media (max-width: 600px) {
+    margin: 10px 10px;
+  }
 `;
 
 export const Home = () => {
@@ -89,6 +92,15 @@ export const Home = () => {
           <SliderContainer books={books} />
           <Title>Books for May</Title>
           <SliderContainer books={books} />
+          <p
+            style={{ padding: "0 15px", color: "#333", fontFamily: "Georgia" }}
+          >
+            Open Library is an open, editable library catalog, building towards
+            a web page for every book ever published. More Just like Wikipedia,
+            you can contribute new information or corrections to the catalog.
+            You can browse by subjects, authors or lists members have created.
+            If you love books, why not help build a library?
+          </p>
         </BooksList>
       </Container>
     </>

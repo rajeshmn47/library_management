@@ -19,6 +19,9 @@ const Container = styled.div`
     text-decoration: none;
     color: #333;
   }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 const DropDown = styled.div`
   border-radius: 3px 0 0 3px;

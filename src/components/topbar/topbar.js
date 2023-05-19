@@ -16,6 +16,9 @@ const Container = styled.div`
     text-decoration: none;
     color: #333;
   }
+  @media (max-width: 800px) {
+    padding: 10px 10px;
+  }
 `;
 
 const Or = styled.div`

@@ -6,6 +6,8 @@ import { register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import axios from "axios";
+import { URL } from "../../constants/userConstants";
 
 const Or = styled.div`
   display: flex;
@@ -43,6 +45,9 @@ const Img = styled.img`
   border-radius: 5px;
   height: 190px;
   object-fit: cover;
+  @media (max-width: 600px) {
+    height: 150px;
+  }
 `;
 const Borrow = styled.a`
   border: none;
@@ -56,6 +61,22 @@ const Borrow = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+`;
+
+const Requested = styled.a`
+  border: none;
+  outline: none;
+  background-color: #666;
+  color: #ffffff;
+  width: 100%;
+  height: 35px;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
 export const Book = ({ data }) => {
   const dispatch = useDispatch();
@@ -65,11 +86,27 @@ export const Book = ({ data }) => {
     (state) => state.user
   );
   console.log(user, "user");
+  useEffect(() => {
+    console.log(data, "data");
+  }, [data]);
+  const handleClick = async (id) => {
+    try {
+      await axios.post(`${URL}/request/${id}`, { userId: user?._id });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <Container>
         <Img src={data?.image} alt="" />
-        <Borrow>Borrow</Borrow>
+        {data.requests.find((u) => u.requestedBy == user._id) ? (
+          <Requested onClick={() => handleClick(data._id)}>
+            Cancel Request
+          </Requested>
+        ) : (
+          <Borrow onClick={() => handleClick(data._id)}>Borrow</Borrow>
+        )}
       </Container>
     </>
   );
