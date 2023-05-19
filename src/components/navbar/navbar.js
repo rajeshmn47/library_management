@@ -6,6 +6,7 @@ import { register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../loader/Loader";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
@@ -79,6 +80,14 @@ const Center = styled.div`
   width: 100%;
   height: 30px;
 `;
+
+const Corner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 30px;
+`;
 export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,8 +120,10 @@ export const Navbar = () => {
             <InputContainer />
           </Grid>
           <Grid item lg={2.5} md={2.5}>
-            <Center>
-              {user?.username ? (
+            <Corner>
+              {loading ? (
+                <Loader />
+              ) : user?.username ? (
                 <Account
                   src="https://archive.org/images/person2.png"
                   onClick={() => setMenuOpen(true)}
@@ -125,7 +136,7 @@ export const Navbar = () => {
               )}
               <Menu src="./menu.svg" alt="" onClick={() => setMenuOpen(true)} />
               <MenuD menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-            </Center>
+            </Corner>
           </Grid>
         </Grid>
       </Container>

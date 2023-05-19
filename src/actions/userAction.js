@@ -49,10 +49,10 @@ export const login = (myform) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     console.log("rajivya");
+    dispatch({ type: LOAD_USER_REQUEST });
     const servertoken =
       localStorage.getItem("server_token") &&
       localStorage.getItem("server_token");
-    dispatch({ type: LOAD_USER_REQUEST });
     const data = await axios(`${URL}/auth/loaduser`, {
       method: "get",
       headers: {
