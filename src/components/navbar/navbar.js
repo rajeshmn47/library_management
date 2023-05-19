@@ -8,15 +8,24 @@ import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
+import PersonSharpIcon from "@mui/icons-material/PersonSharp";
+import InputContainer from "./inputcontainer";
+import MenuD from "./menu";
 
 const Container = styled.div`
-  padding: 20px 120px;
+  padding: 10px 120px;
   a {
     text-decoration: none;
     color: #333;
   }
 `;
 
+const Account = styled.img`
+  height: 40px;
+  border: 2px solid #cdcbc5;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 const Or = styled.div`
   display: flex;
   align-items: center;
@@ -50,6 +59,7 @@ const Input = styled.input`
 
 const Menu = styled.img`
   width: 20px;
+  cursor: pointer;
 `;
 const Img = styled.img`
   width: 100%;
@@ -72,6 +82,7 @@ const Center = styled.div`
 export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
@@ -97,13 +108,23 @@ export const Navbar = () => {
             </Center>
           </Grid>
           <Grid item lg={4.5} md={4.5}>
-            <Input />
+            <InputContainer />
           </Grid>
           <Grid item lg={2.5} md={2.5}>
             <Center>
-              <Link>Log In</Link>
-              <SignUp>SignUp</SignUp>
-              <Menu src="./menu.svg" alt="" />
+              {user ? (
+                <Account
+                  src="https://archive.org/images/person2.png"
+                  onClick={() => setMenuOpen(true)}
+                />
+              ) : (
+                <>
+                  <Link>Log In</Link>
+                  <SignUp to="./signup">SignUp</SignUp>
+                </>
+              )}
+              <Menu src="./menu.svg" alt="" onClick={() => setMenuOpen(true)} />
+              <MenuD menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             </Center>
           </Grid>
         </Grid>

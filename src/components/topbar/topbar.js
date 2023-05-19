@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 
 const Container = styled.div`
-  padding: 20px 120px;
+  padding: 10px 120px;
   background-color: #333;
   a {
     text-decoration: none;
