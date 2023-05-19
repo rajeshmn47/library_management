@@ -17,6 +17,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/userAction";
 
 const drawerWidth = 300;
 
@@ -45,7 +47,7 @@ function MenuD(props) {
   console.log(props, "props");
   const { window, menuOpen, setMenuOpen } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const dispatch = useDispatch();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
     setMenuOpen(false);
@@ -55,8 +57,20 @@ function MenuD(props) {
     <div>
       <Title>My Open Library</Title>
       <DropdownList>
-        {["My Books", "My Profile", "Settings", "Logout"].map((text, index) => (
+        {["My Books", "My Profile", "Settings"].map((text, index) => (
           <SingleItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </SingleItem>
+        ))}
+
+        {["Logout"].map((text, index) => (
+          <SingleItem
+            key={text}
+            disablePadding
+            onClick={() => dispatch(logout())}
+          >
             <ListItemButton>
               <ListItemText primary={text} />
             </ListItemButton>

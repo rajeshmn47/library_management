@@ -112,14 +112,14 @@ export const Navbar = () => {
           </Grid>
           <Grid item lg={2.5} md={2.5}>
             <Center>
-              {user ? (
+              {user?.username ? (
                 <Account
                   src="https://archive.org/images/person2.png"
                   onClick={() => setMenuOpen(true)}
                 />
               ) : (
                 <>
-                  <Link>Log In</Link>
+                  <Link to="./signin">Log In</Link>
                   <SignUp to="./signup">SignUp</SignUp>
                 </>
               )}

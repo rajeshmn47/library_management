@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Book from "./book";
@@ -12,6 +12,8 @@ import { URL } from "../../constants/userConstants";
 import { Grid } from "@mui/material";
 import Navbar from "../navbar/navbar";
 import Topbar from "../topbar/topbar";
+import Slider from "react-slick";
+import SliderContainer from "./slider";
 
 const Or = styled.div`
   display: flex;
@@ -31,9 +33,11 @@ const Heading = styled.p`
   margin: 20px 0;
 `;
 
-const Title = styled.h1`
-  margin-bottom: 20px;
-  color: #666;
+const Title = styled(Link)`
+  color: #02598b;
+  padding-left: 15px;
+  font-size: 1.2em;
+  font-weight: 400;
 `;
 
 const Input = styled.input`
@@ -45,9 +49,12 @@ const Container = styled.div`
 `;
 const BooksList = styled.div`
   background-color: #ffffff;
-  margin: 20px 100px;
-  padding: 20px 25px;
+  margin: 20px 125px;
+  padding: 20px 0;
+  border-radius: 5px;
+  border: 1px solid #babbae;
 `;
+
 export const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -73,14 +80,15 @@ export const Home = () => {
       <Topbar />
       <Container>
         <Navbar />
+      </Container>
+      <Container>
         <BooksList>
-          <Grid container spacing={4}>
-            {books.map((b) => (
-              <Grid item md={2} lg={2} xs={12}>
-                <Book data={b} />
-              </Grid>
-            ))}
-          </Grid>
+          <Title>Trending Books</Title>
+          <SliderContainer books={books} />
+          <Title>Classic Books</Title>
+          <SliderContainer books={books} />
+          <Title>Books for May</Title>
+          <SliderContainer books={books} />
         </BooksList>
       </Container>
     </>

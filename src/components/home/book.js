@@ -35,16 +35,14 @@ const Input = styled.input`
   margin: 5px 0;
 `;
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 10px 10px;
 `;
 const Img = styled.img`
   width: 100%;
   padding: 10px 0;
   border-radius: 5px;
-  max-height: 190px;
-  object-fit: contain;
+  height: 190px;
+  object-fit: cover;
 `;
 const Borrow = styled.a`
   border: none;
@@ -70,7 +68,7 @@ export const Book = ({ data }) => {
   return (
     <>
       <Container>
-        <Img src="https://covers.openlibrary.org/b/id/9269962-M.jpg" alt="" />
+        <Img src={data?.image} alt="" />
         <Borrow>Borrow</Borrow>
       </Container>
     </>

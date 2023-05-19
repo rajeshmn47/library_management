@@ -85,6 +85,7 @@ const Input = styled.input`
   border: none;
   outline: none;
   background-color: #f9f9f9;
+  font-size: 1em;
 `;
 
 const Menu = styled.img`

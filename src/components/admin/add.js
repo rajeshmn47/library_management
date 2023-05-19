@@ -11,6 +11,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid, TextField } from "@mui/material";
 import axios from "axios";
+import storage from "../../firebase";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+} from "firebase/storage";
 import {
   SetMealRounded,
   SettingsSystemDaydreamRounded,
@@ -53,6 +60,7 @@ export const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState();
+  const [file, setFile] = useState(null);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
@@ -70,11 +78,51 @@ export const List = () => {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${URL}/addbook`, {
-      name: name,
-      url: name,
-      postedby: user._id,
-    });
+    const storag = getStorage();
+    /** @type {any}*/
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const storageRef = ref(storage, "images/" + file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case "storage/unauthorized":
+            break;
+          case "storage/canceled":
+            break;
+          case "storage/unknown":
+            break;
+        }
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          axios
+            .post(`${URL}/addbook`, {
+              name: name,
+              url: downloadURL,
+              postedby: user._id,
+            })
+            .then((l) => console.log("added to database", l));
+        });
+      }
+    );
   };
   return (
     <>
@@ -107,7 +155,11 @@ export const List = () => {
                 <label for="file-upload" class="custom-file-upload">
                   upload picture
                 </label>
-                <input id="file-upload" type="file" />
+                <input
+                  id="file-upload"
+                  type="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
               </div>
               <input type="submit" value="submit" className="submit" />
             </form>

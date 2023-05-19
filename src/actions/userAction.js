@@ -69,3 +69,13 @@ export const loadUser = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const logout = () => async (dispatch) => {
+  try {
+    localStorage.removeItem("server_token");
+    window.location.reload();
+  } catch (error) {
+    console.log(error.response, "asdfgh");
+    dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
+  }
+};
