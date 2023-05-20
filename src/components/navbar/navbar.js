@@ -20,6 +20,7 @@ const Container = styled.div`
     text-decoration: none;
     color: #333;
   }
+  padding:10px 120px;
   @media (max-width: 600px) {
     a {
       display: none;
@@ -99,6 +100,7 @@ const Corner = styled.div`
 `;
 
 const SearchMb = styled.div`
+  cursor: pointer;
   @media (max-width: 1900px) {
     display: none;
   }

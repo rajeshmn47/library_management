@@ -16,6 +16,7 @@ import Slider from "react-slick";
 import SliderContainer from "./slider";
 import { getbooks } from "../../actions/bookAction";
 import BelowBar from "../navbar/belowBar";
+import { Example } from "./autosuggest";
 
 const Or = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ const Input = styled.input`
   margin: 5px 0;
 `;
 const Container = styled.div`
-  padding: 20px 10px;
+  padding: 20px 20px;
   @media (max-width: 600px) {
     padding: 10px 10px;
     background: linear-gradient(

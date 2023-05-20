@@ -8,13 +8,16 @@ import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
+import { Example } from "../home/autosuggest";
 
 const Container = styled.div`
+  position: relative;
   background-color: #f9f9f9;
   border: 1px solid #babbae;
   border-radius: 5px;
   padding: 0px 0px;
-  height: 40px;
+  height: auto;
+  min-height: 40px;
   a {
     text-decoration: none;
     color: #333;
@@ -145,7 +148,7 @@ export const InputContainer = () => {
           </Grid>
           <Grid item md={7} lg={7} sm={7}>
             <Center>
-              <Input placeholder="Search" />
+              <Example />
             </Center>
           </Grid>
           <Grid item md={3} lg={3} sm={3}>
