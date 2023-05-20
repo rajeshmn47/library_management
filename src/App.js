@@ -11,6 +11,7 @@ import Navbar from "./components/navbar/navbar";
 import Admin from "./components/admin/add";
 import Dashboard from "./components/admin/dashboard";
 import Edit from "./components/admin/edit";
+import BookDetail from "./components/BookDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/book/:id" element={<BookDetail />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<SignIn />} />
         {user?.type == "admin" && (

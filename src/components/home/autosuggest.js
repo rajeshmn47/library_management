@@ -75,7 +75,7 @@ const getSuggestionValue = (suggestion) => suggestion.name;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = (suggestion) => (
-  <Link to={`${URL}/book/${suggestion._id}`}>
+  <Link to={`./book/${suggestion._id}`}>
     <Suggestion>
       <Img src={suggestion.image} alt="" />
       {suggestion.name}
