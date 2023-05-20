@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { URL } from "../../constants/userConstants";
+import { getbooks } from "../../actions/bookAction";
 
 const Or = styled.div`
   display: flex;
@@ -81,17 +82,41 @@ const Requested = styled.a`
 export const Book = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [books, setBooks] = useState([]);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
+  const { books } = useSelector((state) => state.book);
   console.log(user, "user");
   useEffect(() => {
     console.log(data, "data");
   }, [data]);
   const handleClick = async (id) => {
     try {
-      await axios.post(`${URL}/request/${id}`, { userId: user?._id });
+      if (isAuthenticated) {
+        const data = await axios.post(`${URL}/request/${id}`, {
+          userId: user?._id,
+        });
+        dispatch(getbooks());
+        console.log(data, "requests");
+      } else {
+        navigate("/signin");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleCancel = async (id) => {
+    try {
+      if (isAuthenticated) {
+        const data = await axios.post(`${URL}/cancelrequest/${id}`, {
+          userId: user?._id,
+        });
+        dispatch(getbooks());
+        console.log(data, "requests");
+      } else {
+        navigate("/signin");
+      }
     } catch (e) {
       console.log(e);
     }
@@ -100,10 +125,8 @@ export const Book = ({ data }) => {
     <>
       <Container>
         <Img src={data?.image} alt="" />
-        {data.requests.find((u) => u.requestedBy == user._id) ? (
-          <Requested onClick={() => handleClick(data._id)}>
-            Cancel Request
-          </Requested>
+        {data.requests.find((u) => u.requestedBy == user?._id) ? (
+          <Requested onClick={() => handleCancel(data._id)}>Cancel</Requested>
         ) : (
           <Borrow onClick={() => handleClick(data._id)}>Borrow</Borrow>
         )}

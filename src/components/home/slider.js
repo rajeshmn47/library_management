@@ -131,9 +131,7 @@ export const SliderContainer = ({ books }) => {
     <>
       <Container>
         <Slider {...settings}>
-          {books.map((b) => (
-            <Book data={b} />
-          ))}
+          {books?.length > 0 && books?.map((b) => <Book data={b} />)}
         </Slider>
       </Container>
     </>

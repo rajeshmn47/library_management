@@ -14,6 +14,8 @@ import Navbar from "../navbar/navbar";
 import Topbar from "../topbar/topbar";
 import Slider from "react-slick";
 import SliderContainer from "./slider";
+import { getbooks } from "../../actions/bookAction";
+import BelowBar from "../navbar/belowBar";
 
 const Or = styled.div`
   display: flex;
@@ -46,6 +48,16 @@ const Input = styled.input`
 `;
 const Container = styled.div`
   padding: 20px 10px;
+  @media (max-width: 600px) {
+    padding: 10px 10px;
+    background: linear-gradient(
+      to bottom,
+      hsl(41.2, 47.1%, 93.3%),
+      hsl(41.5, 48.1%, 89.4%)
+    );
+    padding: 0 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
 `;
 const BooksList = styled.div`
   background-color: #ffffff;
@@ -54,28 +66,27 @@ const BooksList = styled.div`
   border-radius: 5px;
   border: 1px solid #babbae;
   @media (max-width: 600px) {
-    margin: 10px 10px;
+    margin: 0;
   }
 `;
 
 export const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [books, setBooks] = useState([]);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
+  const { books } = useSelector((state) => state.book);
   useEffect(() => {
-    async function getbooks() {
+    async function getbookse() {
       try {
-        const data = await axios.get(`${URL}/getbooks`);
-        console.log(data, "books");
-        setBooks([...data.data.data]);
+        //const data = await axios.get(`${URL}/getbooks`);
+        dispatch(getbooks());
       } catch (e) {
         console.log("error", e);
       }
     }
-    getbooks();
+    getbookse();
   }, []);
   console.log(user, "user");
   return (
@@ -84,6 +95,7 @@ export const Home = () => {
       <Container>
         <Navbar />
       </Container>
+      <BelowBar />
       <Container>
         <BooksList>
           <Title>Trending Books</Title>

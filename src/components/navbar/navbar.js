@@ -9,22 +9,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import InputContainer from "./inputcontainer";
 import MenuD from "./menu";
+import InputContainerSm from "./inputcontainerSm";
 
 const Container = styled.div`
-  padding: 10px 120px;
   a {
     text-decoration: none;
     color: #333;
   }
   @media (max-width: 600px) {
-    padding: 10px 10px;
     a {
       display: none;
     }
-  }
+    padding: 10px 10px;
 `;
 
 const Account = styled.img`
@@ -32,6 +32,9 @@ const Account = styled.img`
   border: 2px solid #cdcbc5;
   border-radius: 4px;
   cursor: pointer;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 const Or = styled.div`
   display: flex;
@@ -108,10 +111,16 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
   console.log(user, "user");
+
+  const handleClickAway = () => {
+    console.log(expanded, "expanded");
+    setExpanded(!expanded);
+  };
   return (
     <>
       <Container>
@@ -121,24 +130,36 @@ export const Navbar = () => {
           justifyContent="space-between"
           spacing={2}
         >
-          <Grid item lg={2} md={2}>
-            <Center>
-              <Img src="./library.svg" alt="" />
-            </Center>
-          </Grid>
-          <Grid item lg={2.5} md={2.5}>
-            <Center>
-              <Link>My Books</Link>
-              <Link>Browse</Link>
-            </Center>
-          </Grid>
-          <Grid item lg={4.5} md={4.5}>
-            <InputContainer />
-            <SearchMb>
-              <img src="./search.svg" alt="" />
-            </SearchMb>
-          </Grid>
-          <Grid item lg={2.5} md={2.5}>
+          {expanded ? (
+            <Grid item sm={10} xs={11}>
+              <InputContainerSm handleClickAway={handleClickAway} />
+            </Grid>
+          ) : (
+            <>
+              <Grid item lg={2} md={2}>
+                <Center>
+                  <Img src="./library.svg" alt="" />
+                </Center>
+              </Grid>
+              <Grid item lg={2.5} md={2.5}>
+                <Center>
+                  <Link>My Books</Link>
+                  <Link>Browse</Link>
+                </Center>
+              </Grid>
+              <Grid item lg={4.5} md={4.5}>
+                <InputContainer />
+                <SearchMb>
+                  <img
+                    src="./search.svg"
+                    alt=""
+                    onClick={() => setExpanded(true)}
+                  />
+                </SearchMb>
+              </Grid>
+            </>
+          )}
+          <Grid item lg={2.5} md={2.5} xs={1}>
             <Corner>
               {loading ? (
                 <Loader />
