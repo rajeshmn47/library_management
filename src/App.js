@@ -12,6 +12,7 @@ import Admin from "./components/admin/add";
 import Dashboard from "./components/admin/dashboard";
 import Edit from "./components/admin/edit";
 import BookDetail from "./components/BookDetail";
+import Requests from "./components/admin/requests";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/list" element={<Admin />} />
             <Route path="/admin/edit/:id" element={<Edit />} />
+            <Route path="/admin/requests" element={<Requests />} />
           </>
         )}
       </Routes>

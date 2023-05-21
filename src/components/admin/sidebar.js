@@ -47,6 +47,14 @@ export const Sidebar = () => {
         >
           add
         </button>
+        <button
+          className={
+            location.pathname == "/admin/requests" ? "selected" : "element"
+          }
+          onClick={() => navigate("/admin/requests")}
+        >
+          requests
+        </button>
       </Container>
     </>
   );

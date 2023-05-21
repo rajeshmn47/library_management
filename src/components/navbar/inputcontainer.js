@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 import { Example } from "../home/autosuggest";
+import { FURL } from "../../constants/userConstants";
 
 const Container = styled.div`
   position: relative;
@@ -153,9 +154,9 @@ export const InputContainer = () => {
           </Grid>
           <Grid item md={3} lg={3} sm={3}>
             <RightCorner>
-              <Img src="./search.svg" alt="" />
+              <Img src={`${FURL}/search.svg`} alt="" />
               <Line />
-              <Img src="./barcode.svg" alt="" />
+              <Img src={`${FURL}/barcode.svg`} alt="" />
             </RightCorner>
           </Grid>
         </InputC>

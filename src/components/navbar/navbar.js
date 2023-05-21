@@ -14,6 +14,7 @@ import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import InputContainer from "./inputcontainer";
 import MenuD from "./menu";
 import InputContainerSm from "./inputcontainerSm";
+import { FURL } from "../../constants/userConstants";
 
 const Container = styled.div`
   a {
@@ -140,7 +141,7 @@ export const Navbar = () => {
             <>
               <Grid item lg={2} md={2}>
                 <Center>
-                  <Img src="./library.svg" alt="" />
+                  <Img src={`${FURL}/library.svg`} alt="" />
                 </Center>
               </Grid>
               <Grid item lg={2.5} md={2.5}>
@@ -153,7 +154,7 @@ export const Navbar = () => {
                 <InputContainer />
                 <SearchMb>
                   <img
-                    src="./search.svg"
+                    src={`${FURL}/search.svg`}
                     alt=""
                     onClick={() => setExpanded(true)}
                   />
@@ -176,7 +177,11 @@ export const Navbar = () => {
                   <SignUp to="./signup">SignUp</SignUp>
                 </>
               )}
-              <Menu src="./menu.svg" alt="" onClick={() => setMenuOpen(true)} />
+              <Menu
+                src={`${FURL}/menu.svg`}
+                alt=""
+                onClick={() => setMenuOpen(true)}
+              />
               <MenuD menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             </Corner>
           </Grid>

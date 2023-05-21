@@ -21,7 +21,8 @@ import {
   SettingsSystemDaydreamRounded,
 } from "@mui/icons-material";
 import { URL } from "../../constants/userConstants";
-import Requests from "./requests";
+import UserCard from "../user/UserCard";
+import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 
 const Or = styled.div`
   display: flex;
@@ -57,11 +58,12 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
-export const Dashboard = () => {
+export const Requests = () => {
   const pathname = useLocation();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [requests, setRequests] = useState([]);
   const [deleteItem, setDeleteItem] = useState();
   const navigate = useNavigate();
   const [name, setName] = useState();
@@ -74,6 +76,19 @@ export const Dashboard = () => {
         setLoading(false);
         console.log(data, "books");
         setBooks([...data.data.data]);
+        let r = [];
+        data.data.data.forEach((book) => {
+          if (book.requests.length > 0) {
+            r.push({
+              _id: Math.random(),
+              ...book.requests,
+              quantity: book?.quantity,
+              name: book?.name,
+            });
+          }
+        });
+        setRequests([...r]);
+        console.log(requests, "requests");
       } catch (e) {
         console.log("error", e);
       }
@@ -87,29 +102,30 @@ export const Dashboard = () => {
     setBooks([...data.data.books]);
   };
   const columns = [
-    { field: "_id", headerName: "ID", width: 90 },
+    { field: "_id", headerName: "ID", width: 0 },
     {
-      field: "name",
-      headerName: "name",
-      width: 130,
+      field: "requestedBy",
+      headerName: "requestedBy",
+      width: 250,
       editable: true,
+      renderCell: UserCard,
     },
     {
-      field: "image",
-      headerName: "image",
+      field: "approved",
+      headerName: "approved",
       width: 150,
       editable: true,
     },
     {
       field: "quantity",
       headerName: "quantity",
-      width: 80,
+      width: 120,
       editable: true,
     },
     {
-      field: "author",
-      headerName: "author",
-      width: 150,
+      field: "name",
+      headerName: "name",
+      width: 120,
       editable: true,
     },
     {
@@ -143,7 +159,7 @@ export const Dashboard = () => {
         <Grid item lg={9} md={9}>
           <Box sx={{ height: 400, width: "100%" }}>
             <DataGrid
-              rows={books}
+              rows={requests}
               columns={columns}
               loading={loading}
               initialState={{
@@ -155,8 +171,6 @@ export const Dashboard = () => {
               }}
               getRowId={(row) => row._id}
               pageSizeOptions={[5]}
-              checkboxSelection
-              disableRowSelectionOnClick
             />
           </Box>
         </Grid>
@@ -164,4 +178,4 @@ export const Dashboard = () => {
     </>
   );
 };
-export default Dashboard;
+export default Requests;

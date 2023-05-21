@@ -8,17 +8,19 @@ import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
-import { FURL } from "../../constants/userConstants";
+import axios from "axios";
+import { URL } from "../../constants/userConstants";
 
 const Container = styled.div`
   padding: 10px 120px;
-  background-color: #333;
+  color: #000;
   a {
     text-decoration: none;
     color: #333;
   }
   @media (max-width: 800px) {
     padding: 10px 10px;
+    color: #000;
   }
 `;
 
@@ -79,35 +81,39 @@ const Right = styled.div`
   width: 100%;
   height: 30px;
 `;
-export const Topbar = () => {
+export const UserCard = (props) => {
+  const { id } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isAuthenticated, loading, error } = useSelector(
-    (state) => state.user
-  );
+  const [user, setUser] = useState();
+  console.log(id, props, "idd");
   console.log(user, "user");
+  useEffect(() => {
+    console.log(id, props, "idd");
+    async function getUser() {
+      const headers = {
+        Accept: "application/json",
+      };
+      const servertoken =
+        localStorage.getItem("server_token") &&
+        localStorage.getItem("server_token");
+      const data = await axios(`${URL}/getuser/${id}`, {
+        method: "get",
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+          servertoken: servertoken,
+        },
+      });
+      console.log(data.data, "dta");
+      setUser(data.data.message);
+    }
+    getUser();
+  }, [id]);
   return (
     <>
-      <Container>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={2}
-        >
-          <Grid item lg={6} md={6}>
-            <Left>
-              <Archive src={`${FURL}/archive.svg`} alt="" />
-            </Left>
-          </Grid>
-          <Grid item lg={6} md={6}>
-            <Right>
-              <Menu src={`${FURL}/changelanguage.svg`} alt="" />
-            </Right>
-          </Grid>
-        </Grid>
-      </Container>
+      <Container>{user?.username}</Container>
     </>
   );
 };
-export default Topbar;
+export default UserCard;

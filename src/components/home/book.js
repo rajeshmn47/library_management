@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { URL } from "../../constants/userConstants";
@@ -123,14 +123,16 @@ export const Book = ({ data }) => {
   };
   return (
     <>
-      <Container>
-        <Img src={data?.image} alt="" />
-        {data.requests.find((u) => u.requestedBy == user?._id) ? (
-          <Requested onClick={() => handleCancel(data._id)}>Cancel</Requested>
-        ) : (
-          <Borrow onClick={() => handleClick(data._id)}>Borrow</Borrow>
-        )}
-      </Container>
+      <Link to={`/book/${data?._id}`}>
+        <Container>
+          <Img src={data?.image} alt="" />
+          {data.requests.find((u) => u.requestedBy == user?._id) ? (
+            <Requested onClick={() => handleCancel(data._id)}>Cancel</Requested>
+          ) : (
+            <Borrow onClick={() => handleClick(data._id)}>Borrow</Borrow>
+          )}
+        </Container>
+      </Link>
     </>
   );
 };

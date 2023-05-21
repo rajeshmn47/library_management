@@ -19,6 +19,7 @@ import {
   getStorage,
 } from "firebase/storage";
 import {
+  Autorenew,
   SetMealRounded,
   SettingsSystemDaydreamRounded,
 } from "@mui/icons-material";
@@ -60,6 +61,8 @@ export const List = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState();
+  const [author, setAuthor] = useState();
+  const [quantity, setQuantity] = useState();
   const [file, setFile] = useState(null);
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
@@ -118,6 +121,8 @@ export const List = () => {
               name: name,
               url: downloadURL,
               postedby: user._id,
+              author: author,
+              quantity: quantity,
             })
             .then((l) => console.log("added to database", l));
         });
@@ -142,12 +147,21 @@ export const List = () => {
                   className="input"
                 />
               </div>
-              <div className="email">
-                <h3 style={{ textAlign: "left" }}>name</h3>
+              <div className="name">
+                <h3 style={{ textAlign: "left" }}>author</h3>
                 <input
-                  placeholder="email"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="author"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  className="input"
+                />
+              </div>
+              <div className="name">
+                <h3 style={{ textAlign: "left" }}>quantity</h3>
+                <input
+                  placeholder="quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                   className="input"
                 />
               </div>
