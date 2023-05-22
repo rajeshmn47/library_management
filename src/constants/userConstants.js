@@ -54,7 +54,7 @@ function geturl() {
   if (current == "local") {
     return "http://localhost:8000";
   } else {
-    return "https://stackoverflow-64xj.onrender.com";
+    return "https://library-eld9.onrender.com";
   }
 }
 
@@ -63,7 +63,7 @@ function getfrontendurl() {
   if (current == "local") {
     return "http://localhost:3000";
   } else {
-    return "https://web-production-b36d.up.railway.app";
+    return "https://library-management-tau.vercel.app";
   }
 }
 
