@@ -86,10 +86,7 @@ export const UserCard = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState();
-  console.log(id, props, "idd");
-  console.log(user, "user");
   useEffect(() => {
-    console.log(id, props, "idd");
     async function getUser() {
       const headers = {
         Accept: "application/json",
@@ -105,7 +102,6 @@ export const UserCard = (props) => {
           servertoken: servertoken,
         },
       });
-      console.log(data.data, "dta");
       setUser(data.data.message);
     }
     getUser();

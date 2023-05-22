@@ -132,9 +132,15 @@ export const SliderContainer = () => {
   return (
     <>
       <Container>
-        <Slider {...settings}>
-          {books_loading ? <Loader /> : books?.map((b) => <Book data={b} />)}
-        </Slider>
+        {books_loading ? (
+          <Loader />
+        ) : (
+          <Slider {...settings}>
+            {books?.map((b) => (
+              <Book data={b} />
+            ))}
+          </Slider>
+        )}
       </Container>
     </>
   );

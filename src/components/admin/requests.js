@@ -17,6 +17,9 @@ import styled from "@emotion/styled";
 import { Grid, TextField } from "@mui/material";
 import axios from "axios";
 import {
+  Check,
+  Clear,
+  MarkChatRead,
   SetMealRounded,
   SettingsSystemDaydreamRounded,
 } from "@mui/icons-material";
@@ -58,6 +61,14 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 9px;
+  cursor: pointer;
+`;
+
 export const Requests = () => {
   const pathname = useLocation();
   const dispatch = useDispatch();
@@ -74,35 +85,40 @@ export const Requests = () => {
         setLoading(true);
         const data = await axios.get(`${URL}/getbooks`);
         setLoading(false);
-        console.log(data, "books");
         setBooks([...data.data.data]);
         let r = [];
         data.data.data.forEach((book) => {
           if (book.requests.length > 0) {
-            r.push({
-              _id: Math.random(),
-              ...book.requests,
-              quantity: book?.quantity,
-              name: book?.name,
+            book.requests.forEach((element) => {
+              r.push({
+                ...element,
+                quantity: book?.quantity,
+                name: book,
+              });
             });
           }
         });
         setRequests([...r]);
-        console.log(requests, "requests");
       } catch (e) {
         console.log("error", e);
       }
     }
     getbooks();
   }, []);
-
-  const handleDelete = async (id) => {
-    const data = await axios.get(`${URL}/delete/${id}`);
-    console.log(data.data.books, "books");
-    setBooks([...data.data.books]);
+  console.log(requests, "requests");
+  const handleApprove = async (da, p) => {
+    console.log(da, "r");
+    let data = { ...da };
+    const d = await axios.post(`${URL}/approve`, { ...data, bookId: p });
+    console.log(d, "data");
+  };
+  const handleIgnore = async (da, p) => {
+    console.log(da, "da");
+    let data = { ...da };
+    const d = await axios.post(`${URL}/ignore`, { ...data, bookId: p });
   };
   const columns = [
-    { field: "_id", headerName: "ID", width: 0 },
+    { field: "_id", headerName: "ID", width: 0, hide: true, editable: true },
     {
       field: "requestedBy",
       headerName: "requestedBy",
@@ -112,9 +128,20 @@ export const Requests = () => {
     },
     {
       field: "approved",
-      headerName: "approved",
+      headerName: "issued",
       width: 150,
       editable: true,
+      renderCell: (params) => {
+        return (
+          <Fragment>
+            {params?.value ? (
+              <Center>issued</Center>
+            ) : (
+              <Center>not issued</Center>
+            )}
+          </Fragment>
+        );
+      },
     },
     {
       field: "quantity",
@@ -127,6 +154,9 @@ export const Requests = () => {
       headerName: "name",
       width: 120,
       editable: true,
+      renderCell: (params) => {
+        return <Fragment>{params.value.name}</Fragment>;
+      },
     },
     {
       field: "actions",
@@ -138,18 +168,21 @@ export const Requests = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/edit/${params.id}`}>
-              <EditIcon />
-            </Link>
-            <div onClick={() => handleDelete(params.id)}>
-              <DeleteIcon />
+            <div onClick={() => handleApprove(params.row, params.row.name._id)}>
+              <Center style={{ color: "blueviolet" }}>
+                approve <Check />
+              </Center>
+            </div>
+            <div onClick={() => handleIgnore(params.row, params.row.name._id)}>
+              <Center style={{ color: "red" }}>
+                ignore <Clear />
+              </Center>
             </div>
           </Fragment>
         );
       },
     },
   ];
-  console.log(pathname, "user");
   return (
     <>
       <Grid container>
@@ -166,6 +199,11 @@ export const Requests = () => {
                 pagination: {
                   paginationModel: {
                     pageSize: 8,
+                  },
+                },
+                columns: {
+                  columnVisibilityModel: {
+                    _id: true,
                   },
                 },
               }}
