@@ -36,8 +36,8 @@ export const Sidebar = () => {
     <>
       <Container>
         <button
-          className={location.pathname == "/admin" ? "selected" : "element"}
-          onClick={() => navigate("/admin")}
+          className={location.pathname == "/" ? "selected" : "element"}
+          onClick={() => navigate("/")}
         >
           dashboard
         </button>
@@ -58,8 +58,8 @@ export const Sidebar = () => {
           requests
         </button>
         <button
-          className={location.pathname == "/" ? "selected" : "element"}
-          onClick={() => navigate("/")}
+          className={location.pathname == "/home" ? "selected" : "element"}
+          onClick={() => navigate("/home")}
         >
           home
         </button>
