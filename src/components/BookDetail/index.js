@@ -163,11 +163,12 @@ export const BookDetail = () => {
   const handleClick = async (id) => {
     try {
       if (isAuthenticated) {
-        const data = await axios.post(`${URL}/request/${id}`, {
+        await axios.post(`${URL}/request/${id}`, {
           userId: user?._id,
         });
-        dispatch(getbooks());
-        console.log(data, "requests");
+        const data = await axios.get(`${URL}/getbook/${id}`);
+        setBook(data.data);
+        console.log(data.data.data, "requests");
       } else {
         navigate("/signin");
       }
@@ -179,11 +180,12 @@ export const BookDetail = () => {
   const handleCancel = async (id) => {
     try {
       if (isAuthenticated) {
-        const data = await axios.post(`${URL}/cancelrequest/${id}`, {
+        await axios.post(`${URL}/cancelrequest/${id}`, {
           userId: user?._id,
         });
-        dispatch(getbooks());
-        console.log(data, "requests");
+        const data = await axios.get(`${URL}/getbook/${id}`);
+        console.log(data.data, "requests");
+        setBook(data.data.data);
       } else {
         navigate("/signin");
       }
@@ -202,7 +204,7 @@ export const BookDetail = () => {
           <Grid item lg={3} md={3}>
             <ImageContainer>
               <Img src={book?.image} alt="" />
-              {book?.requests.find((u) => u.requestedBy == user?._id) ? (
+              {book?.requests?.find((u) => u.requestedBy == user?._id) ? (
                 <Requested onClick={() => handleCancel(book?._id)}>
                   Cancel
                 </Requested>

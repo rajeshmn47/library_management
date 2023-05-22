@@ -15,6 +15,7 @@ import { URL } from "../../constants/userConstants";
 import { Grid } from "@mui/material";
 import Navbar from "../navbar/navbar";
 import Topbar from "../topbar/topbar";
+import Loader from "../loader/Loader";
 
 const Or = styled.div`
   display: flex;
@@ -120,18 +121,19 @@ const settings = {
   ],
 };
 
-export const SliderContainer = ({ books }) => {
+export const SliderContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, loading, error } = useSelector(
     (state) => state.user
   );
+  const { books, books_loading } = useSelector((state) => state.book);
   console.log(user, "user");
   return (
     <>
       <Container>
         <Slider {...settings}>
-          {books?.length > 0 && books?.map((b) => <Book data={b} />)}
+          {books_loading ? <Loader /> : books?.map((b) => <Book data={b} />)}
         </Slider>
       </Container>
     </>

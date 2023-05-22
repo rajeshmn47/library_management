@@ -23,6 +23,7 @@ import {
   SetMealRounded,
   SettingsSystemDaydreamRounded,
 } from "@mui/icons-material";
+import { addbook } from "../../utils/apireq";
 
 const Or = styled.div`
   display: flex;
@@ -58,6 +59,7 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 export const List = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState();
@@ -116,15 +118,17 @@ export const List = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          axios
-            .post(`${URL}/addbook`, {
-              name: name,
-              url: downloadURL,
-              postedby: user._id,
-              author: author,
-              quantity: quantity,
-            })
-            .then((l) => console.log("added to database", l));
+          let myform = {
+            name: name,
+            url: downloadURL,
+            postedby: user._id,
+            author: author,
+            quantity: quantity,
+          };
+          addbook(myform).then((l) => {
+            console.log("added to database", l);
+            alert.success("book added successfully");
+          });
         });
       }
     );

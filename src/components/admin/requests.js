@@ -157,7 +157,7 @@ export const Requests = () => {
           <Sidebar />
         </Grid>
         <Grid item lg={9} md={9}>
-          <Box sx={{ height: 400, width: "100%" }}>
+          <Box sx={{ height: 540, width: "100%" }}>
             <DataGrid
               rows={requests}
               columns={columns}
@@ -165,12 +165,12 @@ export const Requests = () => {
               initialState={{
                 pagination: {
                   paginationModel: {
-                    pageSize: 5,
+                    pageSize: 8,
                   },
                 },
               }}
               getRowId={(row) => row._id}
-              pageSizeOptions={[5]}
+              pageSizeOptions={[8]}
             />
           </Box>
         </Grid>

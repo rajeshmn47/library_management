@@ -15,6 +15,8 @@ import {
 
 const Container = styled.div`
   background-color: #000000;
+  padding: 25px 0px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,6 +56,12 @@ export const Sidebar = () => {
           onClick={() => navigate("/admin/requests")}
         >
           requests
+        </button>
+        <button
+          className={location.pathname == "/" ? "selected" : "element"}
+          onClick={() => navigate("/")}
+        >
+          home
         </button>
       </Container>
     </>

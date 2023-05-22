@@ -22,6 +22,7 @@ import {
 } from "@mui/icons-material";
 import { URL } from "../../constants/userConstants";
 import Requests from "./requests";
+import { deletebook } from "../../utils/apireq";
 
 const Or = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ const FormContainer = styled.div`
 
 export const Dashboard = () => {
   const pathname = useLocation();
+  const alert = useAlert();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
@@ -82,8 +84,9 @@ export const Dashboard = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const data = await axios.get(`${URL}/delete/${id}`);
+    const data = await deletebook(id);
     console.log(data.data.books, "books");
+    alert.success("deleted successfully");
     setBooks([...data.data.books]);
   };
   const columns = [
@@ -116,7 +119,7 @@ export const Dashboard = () => {
       field: "actions",
       flex: 0.3,
       headerName: "Actions",
-      width: 150,
+      width: 100,
       type: "number",
       sortable: false,
       renderCell: (params) => {
@@ -141,7 +144,7 @@ export const Dashboard = () => {
           <Sidebar />
         </Grid>
         <Grid item lg={9} md={9}>
-          <Box sx={{ height: 400, width: "100%" }}>
+          <Box sx={{ height: 540, width: "100%" }}>
             <DataGrid
               rows={books}
               columns={columns}
@@ -149,12 +152,12 @@ export const Dashboard = () => {
               initialState={{
                 pagination: {
                   paginationModel: {
-                    pageSize: 5,
+                    pageSize: 8,
                   },
                 },
               }}
               getRowId={(row) => row._id}
-              pageSizeOptions={[5]}
+              pageSizeOptions={[8]}
               checkboxSelection
               disableRowSelectionOnClick
             />
