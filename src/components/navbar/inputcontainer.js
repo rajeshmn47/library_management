@@ -8,7 +8,7 @@ import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
-import { Example } from "../home/autosuggest";
+import { AutoSuggest } from "../home/autosuggest";
 import { FURL } from "../../constants/userConstants";
 
 const Container = styled.div`
@@ -149,7 +149,7 @@ export const InputContainer = () => {
           </Grid>
           <Grid item md={7} lg={7} sm={7}>
             <Center>
-              <Example />
+              <AutoSuggest />
             </Center>
           </Grid>
           <Grid item md={3} lg={3} sm={3}>

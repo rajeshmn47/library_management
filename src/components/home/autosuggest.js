@@ -34,8 +34,19 @@ const Container = styled.div`
     top: 35px;
     width: 100% !important;
     outline: none;
+    z-index: 100000000;
     li {
       list-style-type: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+      padding: 3px 3px;
+    }
+    @media (max-width: 600px) {
+      li a {
+        display: block;
+      }
     }
   }
 `;
@@ -83,7 +94,7 @@ const renderSuggestion = (suggestion) => (
   </Link>
 );
 
-export class Example extends React.Component {
+export class AutoSuggest extends React.Component {
   constructor() {
     super();
 
@@ -124,7 +135,7 @@ export class Example extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: "Type a programming language",
+      placeholder: "Type a book name",
       value,
       onChange: this.onChange,
     };

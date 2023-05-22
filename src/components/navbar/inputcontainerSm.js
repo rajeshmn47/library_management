@@ -8,8 +8,10 @@ import "../../App.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { ClickAwayListener, Grid } from "@mui/material";
+import { AutoSuggest } from "../home/autosuggest";
 
 const Container = styled.div`
+  position: relative;
   background-color: #f9f9f9;
   border: 1px solid #babbae;
   border-radius: 5px;
@@ -147,7 +149,7 @@ export const InputContainerSm = ({ handleClickAway }) => {
             </Grid>
             <Grid item md={6} lg={6} sm={7} xs={6}>
               <Center>
-                <Input placeholder="Search" />
+                <AutoSuggest />
               </Center>
             </Grid>
             <Grid item md={4} lg={4} sm={3} xs={4}>

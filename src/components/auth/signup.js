@@ -52,7 +52,8 @@ export const Signup = () => {
       alert.error(error);
     }
     if (isAuthenticated) {
-      navigate("/");
+      alert.success("registered successfully");
+      navigate("/signin");
     }
   }, [dispatch, loading, isAuthenticated, user, error]);
 
@@ -61,8 +62,8 @@ export const Signup = () => {
     console.log(username, password);
     const formdata = { username: username, email: email, password: password };
     dispatch(register(formdata));
-    console.log("ok");
   };
+
   return (
     <>
       <div className="signup">
