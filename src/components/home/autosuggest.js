@@ -45,7 +45,7 @@ const Container = styled.div`
     }
     @media (max-width: 600px) {
       li a {
-        display: block;
+        display: block  !important;
       }
     }
   }
